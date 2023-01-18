@@ -1,1 +1,2 @@
-# RL-9-3-Front-End-Portfolio-Project
+# Random Movie / Movie Search App
+

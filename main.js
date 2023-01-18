@@ -34,8 +34,10 @@ function getRandomMovie() {
     return randomMovieFromArray;
   }
 //Creating a variable and initializing it to the value being returned by the getRandomMovie() function 
-randomMovie = getRandomMovie();
+let randomMovie = getRandomMovie();
 
+// Creating an element to store value of API key
+const API_KEY = "3dfb80d7";
 // Using a variable called load in order to know if my page was just loaded. Once the user interacts with the page load will become false and the function loadRandomMovie() will not run again.
 let load = true;
 // Creating a variable to store the value of the URL link being fetched upon loading the site 
@@ -49,18 +51,16 @@ function loadRandomMovie(fetchData) {
   //Changing load variable to false now that the initial load was done
   load = false;
   // 
-  // const randomResultDiv = document.querySelector(".random_result");
   randomResultDiv.innerHTML = `
-  <h4 class="text-center mt-5">Here's the first movie of a random trilogy or series:<h4>
-  <p class="text-center mt-4">${fetchData.Title}</p>
-  <img class="rounded mx-auto d-block mt-4" class="img-thumbnail" width="400" height"400" src="${fetchData.Poster}"/> 
+  <h3 class="text-center mt-2" class="movie_title">${fetchData.Title}</h3>
+  <img class="rounded mx-auto d-block mt-4" class="img-thumbnail" width="400" height"400" src="${fetchData.Poster}" alt="Movie poster"/>    
   <p class="text-center mt-2">${fetchData.Year}</p>
   <p class="text-center mt-3">${fetchData.Plot}</p>
   <p class="text-center">Rated: ${fetchData.Rated}</p>
   <p class="text-center">Directed by: ${fetchData.Director}</p>
   <p class="text-center">Genre: ${fetchData.Genre}</p>
   `
-  // console.log(fetchData);
+  
 }
 
 // 
@@ -79,11 +79,16 @@ movieInputForm.addEventListener("submit", movieInputSubmit => {
 });
 
 function getUserSearch(fetchData) {
-  // since I only want the "character of the day" section on load I removed that whole section
   randomResultDiv.remove();
   const searchResultDiv = document.querySelector(".search_result");
+  if (fetchData.Title === undefined) {
+    searchResultDiv.innerHTML = `
+    <h5 class="text-center mt-4"> Please enter a valid movie title.</h5>
+    `
+
+  } else {
   searchResultDiv.innerHTML = `
-  <p class="text-center mt-4">${fetchData.Title}</p>
+  <h3 class="text-center mt-2" class="movie_title">${fetchData.Title}</h3>
   <img class="rounded mx-auto d-block mt-4" class="img-thumbnail" width="400" height"400" src="${fetchData.Poster}"/> 
   <p class="text-center mt-2">${fetchData.Year}</p>
   <p class="text-center mt-3">${fetchData.Plot}</p>
@@ -91,6 +96,7 @@ function getUserSearch(fetchData) {
   <p class="text-center">Directed by: ${fetchData.Director}</p>
   <p class="text-center">Genre: ${fetchData.Genre}</p>
   `
+  }
 };
 
 
